@@ -1,0 +1,258 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.navbarHomeDiv{
+  margin: 2vh 2vw;
+  /* width: 100%; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbarHomeDiv h1{
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.button{
+  margin-right: 10px;
+
+}
+
+.middleHomeDiv{
+  margin: 5vh 1vw;
+  width: 100vw;
+  /* background-color: rgb(171, 169, 167); */
+}
+/* .middleHomeDiv row{
+  margin: 0 0;
+} */
+.middleHomeDiv .row div h4{
+  text-align: left;
+  /* font-size:larger */
+  font-family: 'Quicksand', sans-serif;
+}
+
+.middleHomeDiv .row div p{
+  text-align: left;
+  /* font-size:larger */
+  font-family: 'Quicksand', sans-serif;
+}
+
+#homeImage{
+  width: 50vw;
+}
+
+.LowerHomeDiv{
+  text-align: center;
+  /* position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0; */
+  /* width: 100vw;
+  height: 20vh; */
+  /* background-color: black; */
+  /* color: white; */
+  padding: 2vh 2vw;
+}
+.LowerHomeDiv h3{
+  margin-bottom: 3vh;
+}
+.Card1{
+  text-align: center;
+  margin: 0 2vw;
+  font-family: 'Josefin Sans', sans-serif;
+}
+.Card1:hover{
+  background-color: rgb(225, 225, 225);
+  /* color: white; */
+}
+
+.contactFlex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.line{
+  border-style: solid;
+  border-bottom: 5px;
+  border-left: 5px;
+  border-right: 5px;
+  border-radius: 100px;
+  margin: 0 30vw;
+}
+
+.mainSignInComponent{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.subSignInBox{
+  width: 30vw;
+  /* height: 40vh; */
+  padding: 3vh 3vw;
+  background-color:rgb(238, 238, 238);
+  text-align: center;
+  background: rgba(229, 229, 229, 0.9)
+}
+/* 
+.subSignInBox form div{
+  margin: 1vh 0;
+
+} */
+/*
+#uName{
+  /* margi */
+  /* padding: 1.5vh 0; */
+/* } */ 
+
+.subSignInBox h1{
+  font-family: 'Quicksand', sans-serif;
+}
+
+.buttonHomeDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+}
+.avatar:hover{
+  box-shadow: 0px 0px 10px #888888;
+}
+
+.analytics{
+  margin: 5vh 2vw;
+  display: flex;
+  align-items: center;
+}
+
+.mainDashDiv div h2{
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.paperDiv{
+  background-image: url('./Images/portfolio.jpg');
+  background-repeat: no-repeat;
+  background-attachment:fixed;
+  background-size: cover;
+
+}
+
+.paperDiv h4{
+  color: white;
+}
+
+.paperFlexDiv{
+  display: flex;
+  justify-content: space-between;
+}
+
+.navBarHead{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nameDiv{
+  margin: 2vh 0 0 0;
+  color: white;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* .navBarHead{
+  width: 80vw;
+} */
+
+.accountsDiv{
+  margin-top: 3vh;
+}
+
+.verticalBar{
+  height: 45px;
+  width: 0;
+  border-left: 2px;
+  border-right: 2px;
+  border-top: 0;
+  border-bottom: 0;
+  border-style: solid;
+  border-radius: 20px;
+  border-color: yellow;
+  margin: 0 1vw;
+}
+
+.detailsFlex{
+  display: flex;
+  align-items: center;
+}
+
+.amountFlexDiv{
+  display: flex;
+  align-items: center;
+}
+
+.accountsDiv div h5{
+  color: white;
+}
+
+.spaceBetween{
+  display: flex;
+  justify-content: space-between;
+}
+
+.paymentTypeBox{
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paymentHeading{
+  font-family: 'Lato', sans-serif;
+}
+
+.gatewayDiv{
+  padding: 4vh 4vw;
+  background-color: rgb(156, 156, 156,0.2);
+  border-radius: 10px;
+  box-shadow: 1px 2px 8px 5px #888888;
+}
+
+.div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#container {
+  width: 200px;
+  height: 200px;
+}
+
+@keyframes animation {
+  0% {
+    stroke-dasharray: 1 98;
+    stroke-dashoffset: -105;
+  }
+  50% {
+    stroke-dasharray: 80 10;
+    stroke-dashoffset: -160;
+  }
+  100% {
+    stroke-dasharray: 1 98;
+    stroke-dashoffset: -300;
+  }
+}
+
+#spinner {
+  transform-origin: center;
+  animation-name: animation;
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier;
+  animation-iteration-count: infinite;
+}
