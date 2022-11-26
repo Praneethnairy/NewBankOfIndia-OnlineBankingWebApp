@@ -50,7 +50,7 @@ router.post('/signIn',(req,res)=>{
         if(err) throw err;
         // console.log(result);
         if(result.length === 0){
-            res.status(500);
+            res.status(500).json({'msg':'no user'});
         }
         else{
             const token = generateAccessToken(result[0].u_id);
@@ -375,6 +375,7 @@ router.post('/getPassbook',(req,res)=>{
 router.post('/TransactionDetails',(req,res)=>{
     connection.query(`select a.Fname,a.Mname,a.Lname,t.t_date,t.amount,t.T_type from account_details as a join transaction_details as t on a.accountNo = t.Ben_Ac_no where t.Ac_no = account_id('${req.body.tok}') order by date(t.t_date) desc, t.t_time desc limit 10;`,(err,result)=>{
         if(err) throw err;
+        // console.log(result[0].t_date);
         res.status(200).json({details:result});
     });
 });

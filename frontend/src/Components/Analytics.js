@@ -41,8 +41,8 @@ ChartJS.register(
 );
 
 const cookie = new Cookies();
-const token = cookie.get('userAuthToken');
 export default function Analytics() {
+  const token = cookie.get('userAuthToken');
   const [userDetails,setUserDetails] = useState({
     
   });
@@ -52,7 +52,7 @@ export default function Analytics() {
   const [Weekly,setWeekly] = useState(true);
   const [Monthly,setMonthly] = useState(false);
   const [Yearly,setYearly] = useState(false);
-  const [loading,setLoading] = useState(true);
+
   // useEffect(()=>{},[])
   useEffect(()=>{
     
@@ -113,11 +113,8 @@ export default function Analytics() {
       }
       setUserDetails(res.data.portfolio);
       console.log(res.data.portfolio);
-      setTimeout(()=>{
-        setLoading(false);
-      },3000)
     })
-  },[loading,Weekly,Monthly,Yearly])
+  },[Weekly,Monthly,Yearly])
 
   const weeklyClicked = () =>{
     setWeekly(true);
@@ -219,19 +216,7 @@ export default function Analytics() {
 
   return (<>
   
-    {loading?
-    <div className='div' id="container">
-      <svg viewBox="0 0 50 50">
-        <defs>
-          <filter id="shadow">
-            <feDropShadow dx="0" dy="0" stdDeviation="1.5" 
-              floodColor="#fc6767"/>
-          </filter>
-        </defs>
-        <circle id="spinner" style={{fill:'transparent',stroke:'#dd2476',strokeWidth: '3px',strokeLinecap: 'round'}} cx="25" cy="25" r="10"/>
-    </svg>
-    </div>
-    :
+    
     <div>
     <div className='analytics'>
       <div style={{"textAlign":"center","height":"60vh","width":"50vw","margin":"4vh 1vw"}} >
@@ -403,7 +388,7 @@ export default function Analytics() {
         </Paper>
       </Box>
     </div>
-    </div>}
+    </div>
   </>
   )
 }

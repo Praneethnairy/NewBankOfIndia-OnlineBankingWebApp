@@ -93,6 +93,15 @@ export default function Transactions() {
     setSwitchCheck(e.target.checked);
   }
 
+  let myDate = (date) =>{
+    // let month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const d = new Date(date);
+    let da = d.getDate();
+    let mon = d.getMonth()+1;
+    let year = d.getFullYear();
+    let res = da + '-' + mon + '-' + year;
+    return res;
+  }
   return (
     <div>
         <Navbar bank_name = "New Bank Of India"/>
@@ -123,8 +132,8 @@ export default function Transactions() {
                   <tr key = {id} className = 'table-success'>
                     <th scope="row">{id+1}</th>
                     <td><b>{transac.Fname} {transac.Mname?transac.Mname:''} {transac.Lname?transac.Lname:''}</b></td>
-                    <td>{transac.t_date.slice(0,10)}</td>
-                    <td>{transac.amount}</td>
+                    <td>{myDate(transac.t_date)}</td>
+                    <td>INR {transac.amount} </td>
                   </tr>
                 )
               })}
@@ -149,8 +158,8 @@ export default function Transactions() {
                   <tr key = {id} className = 'table-danger'>
                     <th scope="row">{id+1}</th>
                     <td><b>{transac.Fname} {transac.Mname?transac.Mname:''} {transac.Lname?transac.Lname:''}</b></td>
-                    <td>{transac.t_date.slice(0,10)}</td>
-                    <td>{transac.amount}</td>
+                    <td>{myDate(transac.t_date)}</td>
+                    <td>INR {transac.amount} </td>
                   </tr>
                   
                 )
@@ -180,15 +189,15 @@ export default function Transactions() {
                   <tr key = {id} className = 'table-danger'>
                     <th scope="row">{id+1}</th>
                     <td><b>{transac.Fname} {transac.Mname?transac.Mname:''} {transac.Lname?transac.Lname:''}</b></td>
-                    <td>{transac.t_date.slice(0,10)}</td>
-                    <td>{transac.amount}</td>
+                    <td>{myDate(transac.t_date)}</td>
+                    <td>INR {transac.amount} </td>
                   </tr>
                   :
                   <tr key = {id} className = 'table-success'>
                     <th scope="row">{id+1}</th>
                     <td><b>{transac.Fname} {transac.Mname?transac.Mname:''} {transac.Lname?transac.Lname:''}</b></td>
-                    <td>{transac.t_date.slice(0,10)}</td>
-                    <td>{transac.amount}</td>
+                    <td>{myDate(transac.t_date)}</td>
+                    <td>INR {transac.amount} </td>
                   </tr>
                 )
               })}

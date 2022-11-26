@@ -96,6 +96,15 @@ function Benificiary(props) {
           props.setChange(true);
       })
     }
+    let myDate = (date) =>{
+      // let month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      const d = new Date(date);
+      let da = d.getDate();
+      let mon = d.getMonth()+1;
+      let year = d.getFullYear();
+      let res = da + '-' + mon + '-' + year;
+      return res;
+    }
     return (
         
         <TableRow key={props.row.benificiaryACNo} >
@@ -106,7 +115,7 @@ function Benificiary(props) {
                 {props.row.benificiaryACNo}
             </TableCell>
             <TableCell style={{ width: 160 }} align="right">
-                {props.row.addDate.slice(0,10)}
+                {myDate(props.row.addDate)}
             </TableCell>
             <TableCell style={{ width: 160 }} align="right">
               <Button variant="outlined" color="error" onClick = {deleteClicked}>

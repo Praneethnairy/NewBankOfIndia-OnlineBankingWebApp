@@ -10,8 +10,8 @@ import Register from './Register';
 export default function Home(props) {
   const [signIn,setSignIn] = useState(false);
   const [register,setRegister] = useState(window.localStorage.getItem("register") != null?window.localStorage.getItem("register"):"false");
-
-  useEffect(()=>{},[signIn,register]);
+  const [loading,setLoading] = useState(false);
+  useEffect(()=>{},[signIn,register,loading]);
 
   const signInClicked = () =>{
     setSignIn(true);
@@ -23,7 +23,21 @@ export default function Home(props) {
     
   };
 
-  return (
+  return (<>
+  {loading?
+    <div className='div' id="container">
+      <svg viewBox="0 0 50 50">
+        <defs>
+          <filter id="shadow">
+            <feDropShadow dx="0" dy="0" stdDeviation="1.5" 
+              floodColor="#fc6767"/>
+          </filter>
+        </defs>
+        <circle id="spinner" style={{fill:'transparent',stroke:'#dd2476',strokeWidth: '3px',strokeLinecap: 'round'}} cx="25" cy="25" r="10"/>
+    </svg>
+    </div>
+    :
+  
     <div className='mainHomeDiv' style={{"position":"relative"}}>
       {/* Navbar */}
         <div className='navbarHomeDiv' >
@@ -35,7 +49,7 @@ export default function Home(props) {
             </div>
         </div>
         <div className='line'></div>
-        {signIn === true ? <SignIn socket = {props.socket} setSignin = {setSignIn} setRegister = {setRegister}/> : <></>}
+        {signIn === true ? <SignIn setLoading = {setLoading} socket = {props.socket} setSignin = {setSignIn} setRegister = {setRegister}/> : <></>}
         {register === "true" ? <Register setRegister ={setRegister} setSignin = {setSignIn}/> : <></>}
       <div className='middleHomeDiv container text-center' >
         <div className='row'>
@@ -78,5 +92,7 @@ export default function Home(props) {
       
         
     </div>
+  }
+  </>
   )
 }

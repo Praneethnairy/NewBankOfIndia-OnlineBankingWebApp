@@ -7,9 +7,10 @@ import { useState } from 'react';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
 
+const cookie = new Cookies();
 export default function SignIn(props) {
   const [varAlert, setVarAlert] = useState(false);
-  const cookie = new Cookies();
+
   const navigate = useNavigate();
   const signInFormSubmitted = (e) =>{
     e.preventDefault();
@@ -21,7 +22,12 @@ export default function SignIn(props) {
     // console.log(requested);
     axios.post(`${process.env.REACT_APP_SERVER_URL}/signIn`,requested).then((res)=>{
       cookie.set('userAuthToken',res.data.authTok);
-      navigate('/Dashboard');
+      props.setLoading(true);
+      setTimeout(()=>{
+        props.setLoading(false);
+        navigate('/Dashboard');
+
+      },3000);
     }).catch((err)=>{
       setVarAlert(true);
       setTimeout(()=>{
@@ -40,7 +46,8 @@ export default function SignIn(props) {
     props.setSignin(false);
   }
 
-  return (
+  return (<>
+  
     <div className='mainSignInComponent' style={{"position":"fixed","left":0,"top":0,"zIndex":1}}>
         <div className='subSignInBox'>
             {varAlert === true?<Alert severity="error" >Invalid Username or Password!!!</Alert>:<></>}
@@ -58,5 +65,6 @@ export default function SignIn(props) {
             </form>
         </div>
     </div>
+  </>
   )
 }

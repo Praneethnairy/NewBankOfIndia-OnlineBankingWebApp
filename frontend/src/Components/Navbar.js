@@ -11,18 +11,19 @@ import { red } from '@mui/material/colors';
 // import MailIcon from '@mui/icons-material/Mail';
 
 const cookie = new Cookies();
-const token = cookie.get('userAuthToken');
 
 export default function Navbar(props) {
+  const token = cookie.get('userAuthToken');
   const [anchorEl, setAnchorEl] = useState(null);
   const [name,setName] = useState('');
+  const [state,setState] = useState(false);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   useEffect(()=>{
     axios.post(`${process.env.REACT_APP_SERVER_URL}/getFname`,{tok:token}).then((res)=>{
       setName(res.data.Fname);
     })
-  },[]);
+  },[state]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

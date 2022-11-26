@@ -87,7 +87,15 @@ rowsPerPage: PropTypes.number.isRequired,
 
 
 function Benificiary(props) {
-    
+  let myDate = (date) =>{
+    // let month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const d = new Date(date);
+    let da = d.getDate();
+    let mon = d.getMonth()+1;
+    let year = d.getFullYear();
+    let res = da + '-' + mon + '-' + year;
+    return res;
+  }
     return (
         
         <TableRow key={props.row.benificiaryACNo} >
@@ -95,7 +103,7 @@ function Benificiary(props) {
                 {props.row.Ben_Ac_no}
             </TableCell>
             <TableCell style={{ width: 160 }} align="right">
-                {props.row.t_date.slice(0,10)}
+                {myDate(props.row.t_date)}
             </TableCell>
             {props.row.T_type === "credit"?<TableCell style={{ width: 160,color:"green" }} align="right">Credit</TableCell>:<TableCell style={{ width: 160,color:"red" }} align="right">Debit</TableCell>}
             
