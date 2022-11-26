@@ -7,6 +7,7 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Reciept from './Reciept';
+import PaymentDialog from './PaymentDialog';
 const cookie = new Cookies();
 
 
@@ -19,6 +20,7 @@ export default function GatewaySendMoney() {
     const [amountToBePaid,setAmountToBePaid] = useState('');
     const [pincheck,setPincheck] = useState(false);
     const [moneySentStatus,setMoneySentStatus] = useState(false);
+    const [open,setOpen] = useState(false);
     const benificiaryACNo = localStorage.getItem('acNo');
     const benificiaryName = localStorage.getItem('name');
     useEffect(() =>{
@@ -50,11 +52,15 @@ export default function GatewaySendMoney() {
 
     const PayClicked = (e) =>{
       e.preventDefault();
+      setOpen(true);
       axios.post(`${process.env.REACT_APP_SERVER_URL}/fetchPIN`,{acno:accountNo}).then((res)=>{
         if(e.target.pin.value === res.data.pin){
           axios.post(`${process.env.REACT_APP_SERVER_URL}/transactionUpdate`,{acno:accountNo,bacno:benificiaryACNo,amount:parseInt(amountToBePaid)}).then((res)=>{
             console.log(res.data.message);
-            setMoneySentStatus(true);
+            setTimeout(()=>{
+              setMoneySentStatus(true);
+              setOpen(false);
+            },3000);
           })
         }
         else{
@@ -87,6 +93,7 @@ export default function GatewaySendMoney() {
             <Button variant="contained" color="success" type = "submit">Pay</Button>
           </form>
         </div>
+        <PaymentDialog open = {open}/>
         </div>
         :
         <div>

@@ -127,7 +127,7 @@ router.post('/expenditureGraphcredit',(req,res)=>{
             if(req.body.val === 'monthly'){
                 let creditMonth = [];
                 let creditVal = [];
-                let month = ["January","February","March","April","May","June","July","August","September","November","December"];
+                let month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
                 connection.query(`select monthname(t_date) as month,sum(amount) as amount from transaction_details where ac_no = '${result[0].accountNumber}' and year(t_date) = year(now()) and T_type = 'credit' group by monthname(t_date);`,(err1,res1)=>{
                     if(err1) throw err1;
                     
@@ -226,7 +226,7 @@ router.post('/expenditureGraphdebit',(req,res)=>{
             if(req.body.val === 'monthly'){
                 let debitVal = [];
                 let debitMonth = [];
-                let month = ["January","February","March","April","May","June","July","August","September","November","December"];
+                let month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
                 connection.query(`select monthname(t_date) as month,sum(amount) as amount from transaction_details where ac_no = '${result[0].accountNumber}' and year(t_date) = year(now()) and T_type = 'debit' group by monthname(t_date);`,(err1,res1)=>{
                     if(err1) throw err1;
                     for(let j = 0;j<12;++j){
@@ -324,7 +324,7 @@ router.post('/fetchPIN',(req,res)=>{
 })
 
 router.post('/transactionUpdate',(req,res)=>{
-    connection.query(`insert into transaction_details(T_type,Ac_no,amount,t_date,status_id,Ben_Ac_no) values ('debit','${req.body.acno}','${req.body.amount}',curdate(),1,'${req.body.bacno}'),('credit','${req.body.bacno}','${req.body.amount}',curdate(),1,'${req.body.acno}');`,(err,result)=>{
+    connection.query(`insert into transaction_details(T_type,Ac_no,amount,t_date,status_id,Ben_Ac_no,t_time) values ('debit','${req.body.acno}','${req.body.amount}',curdate(),1,'${req.body.bacno}',current_time()),('credit','${req.body.bacno}','${req.body.amount}',curdate(),1,'${req.body.acno}',current_time());`,(err,result)=>{
         if(err) throw err;
         res.status(200).json({"message":"Success"});
     })
@@ -373,10 +373,35 @@ router.post('/getPassbook',(req,res)=>{
 })
 
 router.post('/TransactionDetails',(req,res)=>{
-    connection.query(`select a.Fname,a.Mname,a.Lname,t.t_date,t.amount,t.T_type from account_details as a join transaction_details as t on a.accountNo = t.Ben_Ac_no where t.Ac_no = account_id('${req.body.tok}') order by t.t_date desc;`,(err,result)=>{
+    connection.query(`select a.Fname,a.Mname,a.Lname,t.t_date,t.amount,t.T_type from account_details as a join transaction_details as t on a.accountNo = t.Ben_Ac_no where t.Ac_no = account_id('${req.body.tok}') order by date(t.t_date) desc, t.t_time desc limit 10;`,(err,result)=>{
         if(err) throw err;
         res.status(200).json({details:result});
     });
 });
+
+router.post('/TransactionDetailsSplit',(req,res)=>{
+    connection.query(`select a.Fname,a.Mname,a.Lname,t.t_date,t.amount,t.T_type,t.t_time from account_details as a join transaction_details as t on a.accountNo = t.Ben_Ac_no where t.t_type = 'debit' and t.Ac_no = account_id('${req.body.tok}') union select a.Fname,a.Mname,a.Lname,t.t_date,t.amount,t.T_type,t.t_time from account_details as a join transaction_details as t on a.accountNo = t.Ben_Ac_no where t.t_type = 'credit' and t.Ac_no = account_id('${req.body.tok}') order by t_date desc, t_time desc;`,(err,result)=>{
+        if(err) throw err;
+        debit = []
+        credit = []
+        for(let i = 0;i<result.length;++i){
+            if(debit.length <= 10 && result[i].T_type === 'debit'){
+                debit.push(result[i])
+            }
+            else if(credit.length <= 10 && result[i].T_type === 'credit'){
+                credit.push(result[i])
+            }
+        }
+        res.status(200).json({debit:debit,credit:credit});
+    })
+})
+
+
+router.post('/getFname',(req,res)=>{
+    connection.query(`select Fname from account_details where accountNo = account_id('${req.body.tok}');`,(err,result)=>{
+        if(err) throw err;
+        res.status(200).json({Fname:result[0].Fname});
+    })
+})
 
 module.exports = router;

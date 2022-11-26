@@ -87,6 +87,7 @@ export default function Analytics() {
           // console.log(res.data.creditVal);
           setgraphLabel(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']);
           setgraphCreditedData(res.data.creditVal);
+          // console.log(res.data.creditVal);
         })
         axios.post(`${process.env.REACT_APP_SERVER_URL}/expenditureGraphdebit`,required).then((res)=>{
           // console.log(res.data.debitVal);

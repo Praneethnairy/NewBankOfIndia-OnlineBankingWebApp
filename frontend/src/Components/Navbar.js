@@ -1,12 +1,12 @@
 import React from 'react'
 import Avatar from '@mui/material/Avatar';
-import icon from '../Images/profile.jpg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
+import { red } from '@mui/material/colors';
 // import Badge from '@mui/material/Badge';
 // import MailIcon from '@mui/icons-material/Mail';
 
@@ -15,8 +15,14 @@ const token = cookie.get('userAuthToken');
 
 export default function Navbar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [name,setName] = useState('');
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  useEffect(()=>{
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/getFname`,{tok:token}).then((res)=>{
+      setName(res.data.Fname);
+    })
+  },[]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -58,10 +64,12 @@ export default function Navbar(props) {
               <h2 style={{fontFamily: "'Roboto Mono', monospace"}}>{window.location.pathname === '/Transactions'?' Transactions': ''}</h2>
             </div>
             <div className='buttonHomeDiv'>
-              <Avatar className = 'avatar' alt="Remy Sharp" src={icon} sx={{"marginRight":"2vw"}} aria-controls={open ? 'basic-menu' : undefined}
+              <Avatar className = 'avatar' sx={{"marginRight":"2vw",bgcolor: red[500] }} aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}/>
+              onClick={handleClick}>
+                {name.slice(0,1)}
+              </Avatar>
 
               <Menu
                 id="basic-menu"
