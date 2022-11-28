@@ -88,14 +88,26 @@ rowsPerPage: PropTypes.number.isRequired,
 
 
 function Benificiary(props) {
+    const [check,setCheck] = React.useState(false);
+    useEffect(()=>{},[check]);
     const deleteClicked = () =>{
       axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteBenificiary`,{acno:props.row.benificiaryACNo}).then((res)=>{
         if(props.change === true)
           props.setChange(false);
         else
           props.setChange(true);
+        setCheck(false);
       })
     }
+
+    const noClicked = () =>{
+      setCheck(false);
+    }
+
+    const checkClicked = () =>{
+      setCheck(true);
+    }
+
     let myDate = (date) =>{
       // let month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
       const d = new Date(date);
@@ -106,7 +118,7 @@ function Benificiary(props) {
       return res;
     }
     return (
-        
+       <> 
         <TableRow key={props.row.benificiaryACNo} >
             <TableCell component="th" scope="row">
                 {props.row.nickName}
@@ -118,11 +130,26 @@ function Benificiary(props) {
                 {myDate(props.row.addDate)}
             </TableCell>
             <TableCell style={{ width: 160 }} align="right">
-              <Button variant="outlined" color="error" onClick = {deleteClicked}>
+              <Button variant="outlined" color="error" onClick = {checkClicked}>
                 Delete
               </Button>
             </TableCell>
         </TableRow>
+        {check?<TableRow style = {{width:"99%",textAlign:"center"}}>
+                <div style={{border:"2px solid grey",padding:"2vh 2vw",borderRadius:"5px"}}>
+                <h3 style = {{margin:"1vh 2vw",fontFamily: "'Lato', sans-serif",textAlign:"center"}}>Confirmation</h3>
+                <p>Do you really want to delete Beneficiary?</p>
+                <Button variant="outlined" color="error" sx = {{"marginRight":"8px"}} onClick = {deleteClicked}>
+                Yes
+              </Button>
+              <Button variant="outlined" color="success" onClick = {noClicked}>
+                No
+              </Button>
+              </div>
+                </TableRow>
+                :
+                <></>}
+        </>
     )
 }
 
@@ -155,6 +182,7 @@ export default function BenificiaryDetails() {
     };
   
     return (
+      <>
       <TableContainer component={Paper} >
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
@@ -169,9 +197,11 @@ export default function BenificiaryDetails() {
             {rows.length !== 0?(rowsPerPage > 0
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : rows
-            ).map((row) => (
+            ).map((row) => (<>
               <Benificiary row = {row} change = {change} setChange = {setChange}/>
-            )):<p style={{padding:"2vh 2vw"}}>No Benificiary to display</p>}
+              
+                </>
+              )):<p style={{padding:"2vh 2vw"}}>No Benificiary to display</p>}
   
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
@@ -201,5 +231,6 @@ export default function BenificiaryDetails() {
           </TableFooter>
         </Table>
       </TableContainer>
+      </>
   );
 }

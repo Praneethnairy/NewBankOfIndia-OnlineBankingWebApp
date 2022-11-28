@@ -2,9 +2,16 @@ import React from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { useState,useEffect } from 'react';
+import Alert from '@mui/material/Alert';
 
 export default function Register(props) {
-
+    const [varAlert, setVarAlert] = useState(false);
+    useEffect(()=>{
+        setTimeout(()=>{
+            setVarAlert(false);
+        },3000);
+    },[varAlert]);
     const registerFormSubmitted = (e) =>{
         e.preventDefault();
         if(e.target.uPass.value !== e.target.retype.value){
@@ -29,7 +36,8 @@ export default function Register(props) {
                 
             }).catch((err)=>{
                 // if(err) throw err;
-                console.log("User already registered");
+                setVarAlert(true);
+                // console.log("User already registered");
             });
         }
     };
@@ -48,6 +56,7 @@ export default function Register(props) {
   return (
     <div className='mainSignInComponent' style={{"position":"fixed","left":0,"top":0,"zIndex":1}}>
         <div className='subSignInBox'>
+        {varAlert === true?<Alert severity="error" >Invalid Account number !!!</Alert>:<></>}
             <h1>Register</h1>
             <form onSubmit={registerFormSubmitted}>
                 <TextField fullWidth label="Bank Account Number" id="acno" name='acno' sx={{"margin":"1vh 0"}} required/>

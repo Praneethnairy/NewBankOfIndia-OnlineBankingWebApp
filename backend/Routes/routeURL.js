@@ -84,7 +84,7 @@ router.post('/registerUser',(req,res)=>{
             });
         }
         else{
-            res.status(200).json({"flag":false,"msg":"Invalid user credentials"});
+            res.status(500).json({"flag":false,"msg":"Invalid user credentials"});
         }
     })
 })
